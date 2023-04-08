@@ -1,0 +1,1 @@
+roses are red violets are blue, strings are objects, boolean can be false or true
