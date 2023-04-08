@@ -1,20 +1,91 @@
 package a_basics;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class A_introJAVA {
+//enums in java
+enum Weekday{
+	MONDAY(0), TUESDAY(1), WEDNESDAY(2), THURSDAY(3), FRIDAY(4), SATURDAY(5), SUNDAY(6);
+	
+	int value;
+	Weekday(int value) {
+		this.value = value;
+	}
+}
 
+//threads interface runnable
+class TryThread1 implements Runnable{
+	@Override
+	public void run() {
+		for(int i=0;i<15;i++) {
+			System.out.println("thread implementing runnable " + i);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+//threads extends Thread
+class TryThread2 extends Thread{
+	public void run() {
+		for(int i=10;i>0;i--) {
+			System.out.println("thread extending Thread " + i);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+public class A_introJAVA implements Serializable, Cloneable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	//java inner classes : must be defined outside the main method
+	public class Inner{
+		int innervar1 = 3;
+		int innervar2;
+	};
+	
+	//defining vars in the outside class
+	int outervar1 = 2;
+	int outervar2 = 5;
+
+	
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
 		/*
@@ -367,7 +438,7 @@ public class A_introJAVA {
 		
 		System.out.println(grocery);
 		
-		
+		//using hash map
 		HashMap<String,ArrayList<String>> groceryMap = new HashMap<String,ArrayList<String>>();
 		groceryMap.put("drinkItems", drinkItems);
 		groceryMap.put("foodItems", foodItems);
@@ -375,6 +446,477 @@ public class A_introJAVA {
 		ArrayList<String> foodRes = groceryMap.get("foodItems");
 		System.out.println(foodRes);
 		
+		//hashtable 
+		Hashtable<String,ArrayList<String>> groceryTable = new Hashtable<String,ArrayList<String>>();
+		groceryTable.put("drinkItems", drinkItems);
+		groceryTable.put("foodItems", foodItems);
+		
+		//printf method
+		System.out.printf("hello there %s you are %d years old right? %n btw you got %f in maths that is %b %n", "aman",25,23.34f,true);
+		
+		//to define the number of digits to come after decimal in float value : %.2f shows two digits after decimal
+		System.out.printf("%.2f",125.32568);
+		
+		//dates in java
+		Date dt1 = new Date();
+		SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println(dt1);
+		System.out.println(df1.format(dt1));
+		
+		String dt2 = df1.format(new Date());
+		
+		Calendar cl = Calendar.getInstance();
+		Date dt3 = cl.getTime();
+		System.out.println("using calendar" + dt3);
+			
+		//roll a dice
+		System.out.println((int)(1+Math.random()*6));
+		System.out.println(new Random().nextInt(6)+1);
+		
+		
+		//access modifiers in java
+		/*
+		 * private visible only to class
+		 * public visible to all classes
+		 * protected within package
+		 * default
+		 */
+		
+		
+		//Exception handling:
+		/*
+		 * Throwable class:
+		 * 		Exception and Errors
+		 * 		Compile Time exception 		Run Time Exceptions
+		 * 		(checked exceptions)		(unchecked exceptions)
+		 *   	--------------------------------------------------
+		 * 		classNotFoundException		IndexOutOfBoundsException
+		 * 		IOException					ArithmeticException
+		 * 		SQLException				IllegalThreadStateException
+		 * 		CloneNotSupportedException	NullPointerException
+		 * 		FileNotFoundException		ClassCastException
+		 */
+		
+		
+		//file class in java
+		try {
+			File file1 = new File("xyz.txt");
+			FileInputStream fis1 = new FileInputStream(file1);
+			System.out.println(file1.getPath());
+			System.out.println(file1.getAbsolutePath());
+		
+		}catch(IOException e) {
+			System.out.println("IO exception");
+			e.printStackTrace();
+		}catch(Exception e) {
+			System.out.println("can not find the file");
+			e.printStackTrace();
+		}
+		
+		//writing to a file
+		FileWriter writer = null;
+		try {
+			File file2 = new File("abc.txt");
+			writer = new FileWriter(file2);
+			writer.write("roses are red violets are blue, strings are objects, boolean can be false or true");
+		}catch(IOException e) {
+			System.out.println("io exception");
+			e.printStackTrace();
+		}finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//reading from a file
+		/*
+		 * FileReader : reads stream of characters. one by one read() retruns an int value which contains the byte value
+		 * 	when read() returns -1 there is no more data to read.
+		 */
+		try {
+			FileReader reader = new FileReader("abc.txt");
+			int data = reader.read();
+			while(data!= -1) {
+				System.out.print((char) data);
+				data = reader.read();
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println();
+		
+		//java method chaining
+		String str5 = "bro";
+		System.out.println(str5.concat("  code    ").toUpperCase().trim().concat(" asdf"));
+		
+		//enums
+		Weekday day = Weekday.MONDAY;
+		System.out.println(day.value);
+		
+		
+		//hashmaps: 
+		/*
+		 * extends AbstractMap and implements Map, Cloneable, Serializable
+		 * very similar to array list, they contain key value pairs of objects
+		 * they are not thread safe or not synchronized that is that two threads can simultaneously work on them
+		 * thread safe option will be hash table 
+		 * we can store null values as well unlike hash table, it can have one null key and multiple null values
+		 * keys can not be duplicated, they must be unique
+		 * hash map does not maintain any order
+		 * initial capacity is 16, just like string buffer/string builder
+		 * 
+		 */
+		
+		HashMap<Integer,String> hmap1 = new HashMap<Integer,String>();
+		hmap1.put(1, "one");
+		hmap1.put(2, "two");
+		hmap1.put(3, "three");
+		hmap1.put(4,"four");
+		
+		System.out.println("map : " + hmap1);
+		
+		hmap1.remove(3);
+		System.out.println("after removing 3 :" + hmap1);
+
+		HashMap<Integer,String> hmap2 = (HashMap<Integer, String>) hmap1.clone();
+		System.out.println("clone :" + hmap2);
+		
+		hmap1.put(5, "five");
+		
+		//get
+		System.out.println(hmap1.get(4));
+		
+		//printing the key value pairs using entrySet()
+		for(Map.Entry<Integer, String> entry : hmap1.entrySet()) {
+			System.out.println("key : " + entry.getKey() + " -> value : " + entry.getValue());
+		}
+		
+		//size
+		System.out.println(hmap1.size());
+		
+		//to see if given key is present or not
+		System.out.println("contains key 3 ? :" + hmap1.containsKey(3));
+		
+		//clearing the hashmap
+		hmap1.clear();
+		System.out.println("after clear : " + hmap1);
+		
+		
+		//custom exceptions
+		/*
+		 * checked : compile time : FileNotFound, ClassNotFound, IOException, SQLException, ClassCast
+		 * unchecked : run time : 	NullPointer, Arithmetic, IndexOutOfBounds, IllegalThreads
+		 * 
+		 * UserMade Exceptions : extends Exception
+		 */
+		System.out.println("enter the age");
+		int ageinp = sc.nextInt();
+		
+		try {
+			checkAge(ageinp);
+		}catch(AgeException e) {
+			System.out.println("age is less than 18");
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		A_introJAVA outerOb = new A_introJAVA();
+		A_introJAVA.Inner innerOb = outerOb.new Inner(); 
+		innerOb.innervar1 = 4;
+		
+		
+		//lambda expressions
+		/*
+		 * mainly used to call the Single abstract methods in the functional interface, like Runnable, or other custom functional interfaces
+		 * 
+		 * 
+		 * threads:
+		 * a thread is the minimum unit of processing in java
+		 * 
+		 */
+
+		//to see the active threads:
+		System.out.println(Thread.activeCount());
+		
+		//name of the running thread
+		System.out.println(Thread.currentThread().getName());
+		
+		//priority fo the thread : 5 is the nominal priority : it ranges from 1 to 10
+		/*
+		 * priority does not mean that it will run before the lesser priority threads, but in case of notify 
+		 * or a deadlock the higher priority thread is given more importance
+		 * 
+		 * main is a thread in itself
+		 */
+		System.out.println(Thread.currentThread().getPriority());
+		
+		
+		//using thread.sleep for the main thread in middle of a loop
+		for(int i=0;i<5;i++) {
+			System.out.println("loop breaking using thread sleep in main :" + i);
+			try {
+				Thread.sleep(1000);
+			}catch(IllegalThreadStateException | InterruptedException e) {
+				System.out.println(e);
+			}
+		}
+		
+		Runnable runnable1 = new TryThread1(); //making object of a class that implements runnable
+		Thread thread1 = new Thread(runnable1); //passing the runnable object to thread object in constructor
+		
+		Thread thread2 = new TryThread2(); //making object of a class that extends thread
+		
+		thread1.start();//bringing the thread in the runnable state, scheduler calls the run method and it goes to running state
+		thread2.start();
+		
+		//creating a thread using anonymous class
+		Runnable runnable3 = new Runnable() {
+			@Override
+			public void run() {
+				for(int i=0;i<10;i++) {
+					System.out.println("thread anonymous runnable " + i);
+					try {
+						Thread.sleep(1500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		
+		Thread thread3 = new Thread(runnable3);
+		thread3.start();
+		
+		//creating a thread using lambda method
+		Runnable runnable4 = () -> {
+			for(int i=0;i<5;i++) {
+				System.out.println("thread anonymous lambda runnable " + i);
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		
+		Thread thread4 = new Thread(runnable4);
+		thread4.start();
+		
+		//easiest way to call
+		new Thread(() -> {
+			for(int i=50;i<60;i++) {
+				System.out.println("thread new object with lambda passed " + i);
+				try {
+					Thread.sleep(1700);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start(); //WE CANT USE JOIN ON THIS SINCE WE DONT HAVE AN OBJECT TO SPECIFY
+		
+		try {
+		thread1.join();
+		thread2.join();
+		thread3.join();
+		thread4.join();
+		}catch(Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		
+		/*
+		 * deamon threads are low priority threads that run in the background to perform other functions
+		 * that help the main threads like garbage collection etc, JVM terminates when all the user threads
+		 * (non-deamon) finish their work
+		 */
+		
+		
+		/*
+		 * generics in java
+		 * changes the input type depending on the type that is passed
+		 * shown by <T>
+		 * we use wrapper classes with these
+		 */
+		//lets say we want to display the array with different types
+		Integer[] intarr1 = {1,2,3,4};
+		Double[] doublearr1 = {1.2,4.4,3.5,1.6};
+		Character[] chararr1 = {'a','v','t'};
+		
+		displayArray(intarr1);
+		displayArray(doublearr1);
+		displayArray(chararr1);
+		
+		returnFirstGeneric(intarr1);
+		returnFirstGeneric(doublearr1);
+		returnFirstGeneric(chararr1);
+		
+		 //serialization in java
+		/*
+		 * converting an object to a byte stream and storing it in a text file to be transferred 
+		 * to a different system so as to be used there	 
+		 * 
+		 * variables with transient keyword are not serialized
+		 * 
+		 * class must implement serializable
+		 */
+		//writing object
+		File fileToSerialize = null;
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		
+		A_introJAVA objser1 = new A_introJAVA();
+		objser1.outervar1 = 2;
+		objser1.outervar2 = 4;
+		
+		try {
+			fileToSerialize = new File("fileToDeserialize.txt");
+		fos = new FileOutputStream(fileToSerialize);
+		oos = new ObjectOutputStream(fos);
+		oos.writeObject(objser1);
+		}catch(IOException e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		
+		//reading the object
+		//deserialization
+		String filePath = fileToSerialize.getAbsolutePath();
+		
+		File fileToDeserialize = null;
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		
+		try {
+			fileToDeserialize = new File(filePath);
+			fis = new FileInputStream(fileToDeserialize);
+			ois = new ObjectInputStream(fis);
+			A_introJAVA deserializedOb = (A_introJAVA)ois.readObject();
+			System.out.println(deserializedOb.outervar1);
+		}catch(IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
+		/*
+		 * Timer and TimerTask
+		 * 
+		 * Timer : facility for threads to schedule tasks for future execution once the timer hits a certain level
+		 * TimerTask : the task that is scheduled for one time or repeat execution by the timer
+		 *
+		 */
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+
+			@Override
+			public void run() {
+				System.out.println("task is completed");
+			}
+		};
+		
+		//now we need to link this task to the timer
+		timer.schedule(task, 0); //if time is 0 then the task happens immediately , second argument is delay
+		
+		//lets create an instance of Calendar class if we want to fix a future date for this task to run
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, 2023);
+		cal.set(Calendar.MONTH, Calendar.APRIL);
+		cal.set(Calendar.DAY_OF_MONTH, 9);
+		cal.set(Calendar.HOUR_OF_DAY, 0); //0 for midnight 0 to 24
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		
+		//adding the timer to the task now
+		timer.schedule(task, cal.getTime());
+		
+		//to repeat a task often following a given condition, we use scheduleAtFixedRate
+		TimerTask task2 = new TimerTask() {
+			int counter = 10;
+
+			@Override
+			public void run() {
+				if(counter>0) {
+					System.out.println(counter + " seconds");
+				}
+				else {
+					System.out.println("happy new year");
+					timer.cancel();
+				}
+			}
+			
+		};
+		
+		timer.scheduleAtFixedRate(task2, 0, 1000); //countdown every second
+		
+		//starting the task at a given timeCalendar cal = Calendar.getInstance();
+		Calendar cal1 = Calendar.getInstance();
+		cal1.set(Calendar.YEAR, 2023);
+		cal1.set(Calendar.MONTH, Calendar.DECEMBER);
+		cal1.set(Calendar.DAY_OF_MONTH, 31);
+		cal1.set(Calendar.HOUR_OF_DAY, 23); //0 for midnight 0 to 24
+		cal1.set(Calendar.MINUTE, 59);
+		cal1.set(Calendar.SECOND, 50);
+		cal1.set(Calendar.MILLISECOND, 0);
+		
+		timer.scheduleAtFixedRate(task2, cal1.getTime(), 1000); //new year countdown
+		
+		
+		
+		
+		
+		/*
+		 * package : 
+		 * is a bundle of related files that we use in our programs
+		 * 
+		 */
+		
+		/*
+		 * running a java program on the command prompt
+		 * 
+		 * set path C:/Users/Programs/.../java jdk /bin
+		 * javac Program.java => java file converted to byte code
+		 * java Program => byte code converted to machine code using JRE	
+		 * 
+		 */
+		
+		
+		
+		/*
+		 * creating an executable jar file using the eclipse ide	
+1. Right click on Java project (pick a project with a GUI)
+2. Export
+3. Java , Runnable Jar file
+4. At Launch configuration select your project
+5. At Export destination, select where you want this jar file exported to
+6. Finish
+
+
+If you want an icon, convert an image to a .ico file
+----------------------------------------------------
+1. https://icoconvert.com/ (this is a decent site)
+2. Choose your image (file type my vary)
+3. Upload
+4. Convert to ICO
+5. Download your icon
+
+
+Use Launch4j to create an .exe with custom icon
+----------------------------------------------
+1. Install Launch4j http://launch4j.sourceforge.net/
+2. Output file: browse for the output destination and name your file ending with .exe
+3. Jar: browse for where you saved your jar or executable jar file
+4. (Optional) Icon: browse for your custom icon (must be .ico)
+5. navigate to JRE tab
+6. Bundled JRE path: Browse for location of your jdk (Example C:\Program Files\Java\jdk-14.0.1)
+7. At the top of window, click the Build Wrapper (gear icon)
+8. name and save the Lauch4j config file where you want
+9. Your application.exe should be saved to your output file location (no longer need previous files)
+		 */
 		
 		
 		
@@ -384,10 +926,20 @@ public class A_introJAVA {
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		System.out.printf("%n %n %n");
 		sc.close();
 		long endTime = System.currentTimeMillis();
 		System.out.println("time taken : " + (endTime - startTime));
 	}
+	
+	
 	
 	public static int binaryToDecimal(int n,int base) {
 		int result = 0;
@@ -400,5 +952,54 @@ public class A_introJAVA {
 		}
 		return result;
 	}
+	
+	public static void checkAge(int age) throws AgeException {
+		if(age<18) {
+			throw new AgeException("age is less than 18");
+		}
+		else {
+			System.out.println("you are allowed to enter");
+		}
+	}
 
+	
+//	public static void displayArray(Integer[] arr) {
+//		for(Integer a : arr) {
+//			System.out.println(a);
+//		}
+//	}
+//	
+//	public static void displayArray(Double[] arr) {
+//		for(Double a : arr) {
+//			System.out.println(a);
+//		}
+//	}
+//	
+//	public static void displayArray(Character[] arr) {
+//		for(Character a : arr) {
+//			System.out.println(a);
+//		}
+//	}
+//	
+	public static <T> void displayArray(T[] arr){
+		for(T a : arr) {
+			System.out.println(a);
+		}
+	}
+	
+	public static <T> T returnFirstGeneric(T[] arr) {
+		return arr[0];
+	}
+}
+
+class AgeException extends Exception{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	AgeException(String message){
+		super(message);
+	}
 }
