@@ -1,19 +1,48 @@
 package a_basics;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+//enums in java
+enum Weekday{
+	MONDAY(0), TUESDAY(1), WEDNESDAY(2), THURSDAY(3), FRIDAY(4), SATURDAY(5), SUNDAY(6);
+	
+	int value;
+	Weekday(int value) {
+		this.value = value;
+	}
+}
 public class A_introJAVA {
+	
+	//java inner classes : must be defined outside the main method
+	public class Inner{
+		int innervar1 = 3;
+		int innervar2;
+	};
+	
+	//defining vars in the outside class
+	int outervar1 = 2;
+	int outervar2 = 5;
 
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
@@ -367,7 +396,7 @@ public class A_introJAVA {
 		
 		System.out.println(grocery);
 		
-		
+		//using hash map
 		HashMap<String,ArrayList<String>> groceryMap = new HashMap<String,ArrayList<String>>();
 		groceryMap.put("drinkItems", drinkItems);
 		groceryMap.put("foodItems", foodItems);
@@ -375,19 +404,208 @@ public class A_introJAVA {
 		ArrayList<String> foodRes = groceryMap.get("foodItems");
 		System.out.println(foodRes);
 		
+		//hashtable 
+		Hashtable<String,ArrayList<String>> groceryTable = new Hashtable<String,ArrayList<String>>();
+		groceryTable.put("drinkItems", drinkItems);
+		groceryTable.put("foodItems", foodItems);
+		
+		//printf method
+		System.out.printf("hello there %s you are %d years old right? %n btw you got %f in maths that is %b %n", "aman",25,23.34f,true);
+		
+		//to define the number of digits to come after decimal in float value : %.2f shows two digits after decimal
+		System.out.printf("%.2f",125.32568);
+		
+		//dates in java
+		Date dt1 = new Date();
+		SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println(dt1);
+		System.out.println(df1.format(dt1));
+		
+		String dt2 = df1.format(new Date());
+		
+		Calendar cl = Calendar.getInstance();
+		Date dt3 = cl.getTime();
+		System.out.println("using calendar" + dt3);
+			
+		//roll a dice
+		System.out.println((int)(1+Math.random()*6));
+		System.out.println(new Random().nextInt(6)+1);
+		
+		
+		//access modifiers in java
+		/*
+		 * private visible only to class
+		 * public visible to all classes
+		 * protected within package
+		 * default
+		 */
+		
+		
+		//Exception handling:
+		/*
+		 * Throwable class:
+		 * 		Exception and Errors
+		 * 		Compile Time exception 		Run Time Exceptions
+		 * 		(checked exceptions)		(unchecked exceptions)
+		 *   	--------------------------------------------------
+		 * 		classNotFoundException		IndexOutOfBoundsException
+		 * 		IOException					ArithmeticException
+		 * 		SQLException				IllegalThreadStateException
+		 * 		CloneNotSupportedException	NullPointerException
+		 * 		FileNotFoundException		ClassCastException
+		 */
+		
+		
+		//file class in java
+		try {
+			File file1 = new File("xyz.txt");
+			FileInputStream fis1 = new FileInputStream(file1);
+			System.out.println(file1.getPath());
+			System.out.println(file1.getAbsolutePath());
+		
+		}catch(IOException e) {
+			System.out.println("IO exception");
+			e.printStackTrace();
+		}catch(Exception e) {
+			System.out.println("can not find the file");
+			e.printStackTrace();
+		}
+		
+		//writing to a file
+		FileWriter writer = null;
+		try {
+			File file2 = new File("abc.txt");
+			writer = new FileWriter(file2);
+			writer.write("roses are red violets are blue, strings are objects, boolean can be false or true");
+		}catch(IOException e) {
+			System.out.println("io exception");
+			e.printStackTrace();
+		}finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//reading from a file
+		/*
+		 * FileReader : reads stream of characters. one by one read() retruns an int value which contains the byte value
+		 * 	when read() returns -1 there is no more data to read.
+		 */
+		try {
+			FileReader reader = new FileReader("abc.txt");
+			int data = reader.read();
+			while(data!= -1) {
+				System.out.print((char) data);
+				data = reader.read();
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println();
+		
+		//java method chaining
+		String str5 = "bro";
+		System.out.println(str5.concat("  code    ").toUpperCase().trim().concat(" asdf"));
+		
+		//enums
+		Weekday day = Weekday.MONDAY;
+		System.out.println(day.value);
+		
+		
+		//hashmaps: 
+		/*
+		 * extends AbstractMap and implements Map, Cloneable, Serializable
+		 * very similar to array list, they contain key value pairs of objects
+		 * they are not thread safe or not synchronized that is that two threads can simultaneously work on them
+		 * thread safe option will be hash table 
+		 * we can store null values as well unlike hash table, it can have one null key and multiple null values
+		 * keys can not be duplicated, they must be unique
+		 * hash map does not maintain any order
+		 * initial capacity is 16, just like string buffer/string builder
+		 * 
+		 */
+		
+		HashMap<Integer,String> hmap1 = new HashMap<Integer,String>();
+		hmap1.put(1, "one");
+		hmap1.put(2, "two");
+		hmap1.put(3, "three");
+		hmap1.put(4,"four");
+		
+		System.out.println("map : " + hmap1);
+		
+		hmap1.remove(3);
+		System.out.println("after removing 3 :" + hmap1);
+
+		HashMap<Integer,String> hmap2 = (HashMap<Integer, String>) hmap1.clone();
+		System.out.println("clone :" + hmap2);
+		
+		hmap1.put(5, "five");
+		
+		//get
+		System.out.println(hmap1.get(4));
+		
+		//printing the key value pairs using entrySet()
+		for(Map.Entry<Integer, String> entry : hmap1.entrySet()) {
+			System.out.println("key : " + entry.getKey() + " -> value : " + entry.getValue());
+		}
+		
+		//size
+		System.out.println(hmap1.size());
+		
+		//to see if given key is present or not
+		System.out.println("contains key 3 ? :" + hmap1.containsKey(3));
+		
+		//clearing the hashmap
+		hmap1.clear();
+		System.out.println("after clear : " + hmap1);
+		
+		
+		//custom exceptions
+		/*
+		 * checked : compile time : FileNotFound, ClassNotFound, IOException, SQLException, ClassCast
+		 * unchecked : run time : 	NullPointer, Arithmetic, IndexOutOfBounds, IllegalThreads
+		 * 
+		 * UserMade Exceptions : extends Exception
+		 */
+		System.out.println("enter the age");
+		int ageinp = sc.nextInt();
+		
+		try {
+			checkAge(ageinp);
+		}catch(AgeException e) {
+			System.out.println("age is less than 18");
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		A_introJAVA outerOb = new A_introJAVA();
+		A_introJAVA.Inner innerOb = outerOb.new Inner(); 
+		innerOb.innervar1 = 4;
+		
+		
+		//lambda expressions
+		/*
+		 * mainly used to call the Single abstract methods in the functional interface, like Runnable, or other custom functional interfaces
+		 * 
+		 */
+
 		
 		
 		
 		
 		
-		
-		
-		
-		
+		System.out.printf("%n %n %n");
 		sc.close();
 		long endTime = System.currentTimeMillis();
 		System.out.println("time taken : " + (endTime - startTime));
 	}
+	
+	
 	
 	public static int binaryToDecimal(int n,int base) {
 		int result = 0;
@@ -400,5 +618,26 @@ public class A_introJAVA {
 		}
 		return result;
 	}
+	
+	public static void checkAge(int age) throws AgeException {
+		if(age<18) {
+			throw new AgeException("age is less than 18");
+		}
+		else {
+			System.out.println("you are allowed to enter");
+		}
+	}
 
+}
+
+class AgeException extends Exception{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	AgeException(String message){
+		super(message);
+	}
 }
