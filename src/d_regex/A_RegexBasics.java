@@ -1,5 +1,8 @@
 package d_regex;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class A_RegexBasics {
@@ -13,8 +16,11 @@ public class A_RegexBasics {
 		 * matchResult interface
 		 * patternSyntaxException class
 		 */
-		long startTime = System.currentTimeMillis();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy");
+		System.out.println(df.format(new Date()));
 		
+		long startTime = System.currentTimeMillis();
+
 		boolean ifMatch1;
 		ifMatch1 = Pattern.matches(".*s", "aasdfadsfs");	
 		ifMatch1 = Pattern.matches("[abc]","a");// a or b or c
@@ -27,10 +33,10 @@ public class A_RegexBasics {
 		
 		//quantifiers
 		ifMatch1 = Pattern.matches("[abc]?",""); // ? is 0 or 1 times
-		ifMatch1 = Pattern.matches("[abc]?","a"); // one time present
+		ifMatch1 = Pattern.matches("[abc]?.","aa"); // one time present
 		ifMatch1 = Pattern.matches("[abc]*","abc");//* is 0 or more times
-		ifMatch1 = Pattern.matches("[abc]+","aabbc"); // + is 1 or more times
-		ifMatch1 = Pattern.matches(".*[a]{2}.*","maan");//. means any character  * 0 or more times, a comes twice and then again any char 0 or more times
+		ifMatch1 = Pattern.matches(".[abc]+","dbbc"); // + is 1 or more times
+		ifMatch1 = Pattern.matches(".*a{2}.*","maan");//. means any character  * 0 or more times, a comes twice and then again any char 0 or more times
 		ifMatch1 = Pattern.matches("[a]{4,}","aaaaaaa");// a comes atleast 4 times
 		
 		//regex metacharacters
@@ -45,7 +51,7 @@ public class A_RegexBasics {
 		//for email
 		ifMatch1 = Pattern.matches("[\\w]*[@]{1}[a-z]+mail.com$","pandiaman16@gmail.com");
 		
-		
+	
 		
 		
 		System.out.println(ifMatch1);
