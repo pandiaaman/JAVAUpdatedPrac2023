@@ -25,13 +25,22 @@ public class H_SortingAlgos {
 		for(int a : arr) {System.out.print(a + " ");}
 		
 		arr = new int[] {9,4,2,6,8,5,12,33,14,10,1,22};
-		quickSort(arr);
+		quickSort(arr, 0 , arr.length-1);
 		System.out.println();
-		System.out.println("after merge sort ");
+		System.out.println("after quick sort ");
 		for(int a : arr) {System.out.print(a + " ");}
 	}
 
-	private static void quickSort(int[] arr) {
+	private static void quickSort(int[] arr, int start, int end) {
+		
+		/*
+		 * moves smaller elements to the left of pivot, keeps the pivot at end and keeps comparing elements, later swaps the pivot
+		 * run time complexity : O(n log n)
+		 * 		worst case : O(n^2)
+		 * 
+		 * space complexity : O(n log n) due to recursion
+		 */
+		
 		/*
 		 * we set the pivot to the end
 		 * we use two indices to find the final resting place for the pivot value
@@ -50,6 +59,34 @@ public class H_SortingAlgos {
 		 * now in the next loop, pivot will become the last element of sub array that is passed
 		 */
 		
+		if(end<=start) {
+			return; //base case
+		}
+		int pivot = partition(arr,start,end);
+		quickSort(arr,start,pivot-1);
+		quickSort(arr,pivot+1,end);
+		
+	}
+
+	private static int partition(int[] arr, int start, int end) {
+		//pivot is always at the end in this method
+		int pivot = arr[end];
+		int i = start - 1;
+		
+		for(int j=start; j<=end-1;j++) {
+			if(arr[j] < pivot) {
+				i++;
+				int temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+			}
+		}
+		i++;
+		int temp = arr[i];
+		arr[i] = arr[end];
+		arr[end] = temp;
+		
+		return i;
 	}
 
 	private static void mergeSort(int[] arr) {
