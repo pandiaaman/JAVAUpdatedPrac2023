@@ -18,7 +18,7 @@ class Machine{
 	
 	 synchronized void work(int n, int sleep) {
 		for(int i=0;i<10;i++) {
-			System.out.println("value for " + this.name + " is " + i*n);
+			System.out.println("value for " + Thread.currentThread().getName() + " is " + i*n);
 			try {
 				Thread.sleep(sleep);
 			}catch(InterruptedException e) {
@@ -52,6 +52,8 @@ public class ThreadImplementation2withSynchronized {
 //		Machine m2 = new Machine("machine2",200,"on");
 		
 		//synchronized works when we are using multiple threads to access same reosource of SAME object
+		//only one thread can act on a synchronized block at a given time
+		//Synchronized block is used to lock an object for any shared resource.
 		
 		MyThreadMachine t1 = new MyThreadMachine(m1,10,1500);
 		MyThreadMachine t2 = new MyThreadMachine(m1,20,1000);	
