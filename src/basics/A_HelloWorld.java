@@ -830,7 +830,7 @@ public class A_HelloWorld {
 		public Dog(boolean male, String name, int paws, int age) {
 			super(male,name);
 			this.paws = paws;
-			this.age = age;
+			this.age = age; 
 		}
 	}
 	
