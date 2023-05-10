@@ -825,7 +825,7 @@ public class A_HelloWorld {
 	}
 
 	class Dog extends Animal{
-		int paws;
+		int paws; 
 		transient int age;
 		public Dog(boolean male, String name, int paws, int age) {
 			super(male,name);
