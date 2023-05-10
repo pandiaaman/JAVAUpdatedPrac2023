@@ -121,11 +121,11 @@ public class A_introJAVA implements Serializable, Cloneable {
 		 * binary representation : 
 		 */
 		
-		//binary : 3 octal  : 8 hexadecimal : 16
+		//binary : 2 octal  : 8 hexadecimal : 16
 		System.out.println(Integer.parseInt("1101",2));
 		
 		int binaryNum = 0B1101;
-		System.out.println(binaryNum);
+		System.out.println("binaryyyyyyyyyyyyyyyyyyyyyyyy" + binaryNum);
 		
 		int res1 = binaryToDecimal(1101,2);//2 is the base for binary, to get hexadecimal put 16 , for octal put 8
 		System.out.println(res1);
@@ -409,7 +409,7 @@ public class A_introJAVA implements Serializable, Cloneable {
 		//remove an element
 		ls1.remove(2); //removes the 2nd index //index starts from 0
 		
-		Iterator itr1 = ls1.iterator();
+		Iterator<Integer> itr1 = ls1.iterator();
 		while(itr1.hasNext()) {
 			System.out.println("iterator through ls1" + itr1.next());
 		}
@@ -775,9 +775,9 @@ public class A_introJAVA implements Serializable, Cloneable {
 		
 		try {
 			fileToSerialize = new File("fileToDeserialize.txt");
-		fos = new FileOutputStream(fileToSerialize);
-		oos = new ObjectOutputStream(fos);
-		oos.writeObject(objser1);
+			fos = new FileOutputStream(fileToSerialize);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(objser1);
 		}catch(IOException e) {
 			System.out.println(e);
 			e.printStackTrace();

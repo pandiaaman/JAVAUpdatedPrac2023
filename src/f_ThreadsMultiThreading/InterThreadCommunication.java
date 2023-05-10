@@ -48,10 +48,19 @@ public class InterThreadCommunication {
 			c.withdraw(40000);
 		}).start();
 		
-		new Thread(()->{
-			c.deposit(50000);
-		}).start();
+		System.out.println("main thread running : " + Thread.currentThread().getName());
 		
+		Thread tDep = new Thread(()->{
+			c.deposit(50000);
+		});
+		
+		try { //simulating that deposit process starts after some time
+			tDep.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		tDep.start();
 	}
 
 }

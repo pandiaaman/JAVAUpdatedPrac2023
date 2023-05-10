@@ -16,14 +16,14 @@ public class AudioPlayer {
 		Scanner sc = new Scanner(System.in);
 		
 		File file1 = null;
-//		File file2 = null;
+		File file2 = null;
 		
 		AudioInputStream audioStream = null;
 		Clip clip = null;
 		
 		try {
 			file1 = new File("Calm Cam - TrackTribe.wav");
-//			file2 = new File("On The Rocks - TrackTribe.wav");
+			file2 = new File("On The Rocks - TrackTribe.wav");
 			
 			audioStream  = AudioSystem.getAudioInputStream(file1);
 			clip = AudioSystem.getClip();
