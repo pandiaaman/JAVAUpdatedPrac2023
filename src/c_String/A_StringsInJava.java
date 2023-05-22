@@ -109,6 +109,7 @@ public class A_StringsInJava {
 		 * reverse
 		 * insert
 		 * length
+		 * delete
 		 * capacity
 		 * ensurecapacity
 		 * substring
@@ -148,13 +149,20 @@ public class A_StringsInJava {
 		//capitalize each word in java
 		String stin = new String("hello, as you can see we are having each word capitalized here");
 		String[] stinarr = stin.split("\s");
+		String[] res = new String[stinarr.length];
+		int index = 0;
 		for( String ast : stinarr) {
-			ast = ast.replace(ast.charAt(0), String.valueOf(ast.charAt(0)).toUpperCase().charAt(0));
-			System.out.println(ast);
+			ast = ast.replace(ast.charAt(0), String.valueOf(ast).toUpperCase().charAt(0));
+			res[index++] = ast;
 		}
 		
+		List<String> lststr = Arrays.asList(res);
+		String finalres = lststr.stream().collect(Collectors.joining(" "));
+		System.out.println(finalres);
+		
+		
 	
-		//anagram string using st1 and st2
+		//anagram string using st1 and st2 : if both strings contain the same characters
 		//usting toCharArrays
 		char[] arrchst1 = st1.toCharArray();
 		char[] arrchst2 = st2.toCharArray();
@@ -182,7 +190,17 @@ public class A_StringsInJava {
 		System.out.println(dt1);
 		
 		
+		String input = new String("hello there");
+		//reversal
+		StringBuffer finalresrev = new StringBuffer(input);
+		finalresrev.reverse();
 		
+		for(char eachchar: input.toCharArray()) {
+			finalresrev.append(eachchar);
+		}
+		System.out.println(finalresrev);
+		
+		/*
 		int aaa = 12;
 		String sss = String.valueOf(aaa);
 		
@@ -487,5 +505,7 @@ public class A_StringsInJava {
 			}
 		}
 		System.out.println(stres);
+		
+		*/
 	}
 }
