@@ -1,14 +1,18 @@
 package javaIntro;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class BasicQuestions {
 
 	public static void main(String[] args) {
-		//find the factorial using recursion
+		
+	
+		//find the factorial using recursion 
 		int factorialRec = factorialRec(3);
 		System.out.println(factorialRec);
 		
