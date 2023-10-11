@@ -70,7 +70,7 @@ public class A_OOPS_Concepts{
 		 * 
 		 * encapsulation : hiding data : putting data and methods together
 		 * 
-		 * coupling : 
+		 * coupling : how tightly or heavily are two classes dependent on each other, should be losely coupled
 		 * 
 		 * cohesion : 
 		 * 
@@ -78,7 +78,7 @@ public class A_OOPS_Concepts{
 		 * 
 		 * aggregation : has-a relationship : when one object contains the other object inside it
 		 * 
-		 * composition
+		 * composition : the child element can not exist without the parent element
 		 * 
 		 * super keyword : is for immediate parent class
 		 * 
@@ -159,7 +159,7 @@ public class A_OOPS_Concepts{
 		//wrapper class in java: autoboxing and unboxing : primitives into objects and objects into primitives
 		/*
 		 * wrapper classes are used to convert the primitive types into their corresponding objects
-		 * we can use .valueOf() method for converting from primitive to wrapper
+		 * we can use Integer.valueOf() method for converting from primitive to wrapper
 		 * and we can use .intValue() method for conversion from wrapper to primitive
 		 * 
 		 * there is auto boxing and auto unboxing too

@@ -15,6 +15,7 @@ public class B_2_SelectionSort {
 		 * it is better than bubble sort coz we only swap once each loop
 		 */
 		int[] arr = new int[] {1,34,99,56,-38,9,23,-56,12,7};
+		arr = new int[] {1,7,13,-5,8,-12,9,6,3,2,22,4};
 		int turn = 0;
 		for(int sortedpartition=arr.length-1;sortedpartition>0;sortedpartition--) {
 			int maxindex = 0;

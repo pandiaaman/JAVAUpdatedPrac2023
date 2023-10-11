@@ -11,7 +11,7 @@ public class A_3_BinarySearch {
 //			System.out.print(a + " ");
 		}
 //		System.out.println(arr.length);
-		int key =354;
+		int key =88;
 		System.out.println(binarySearch(arr,0,arr.length-1,key)+ 1);
 	}
 

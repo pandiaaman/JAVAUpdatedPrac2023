@@ -51,8 +51,12 @@ public class A_RegexBasics {
 		//for email
 		ifMatch1 = Pattern.matches("[\\w]*[@]{1}[a-z]+mail.com$","pandiaman16@gmail.com");
 		
+		ifMatch1 = Pattern.matches(".*", "");
 	
-		
+		String useremail = "pandiaaman16@gmail.com";
+		if(Pattern.matches(".*@\\w+mail.com", useremail)) {
+			System.out.println("matches");
+		}
 		
 		System.out.println(ifMatch1);
 		

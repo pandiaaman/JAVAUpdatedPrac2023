@@ -42,12 +42,16 @@ public class F_3_UniqueSubsequences {
 	
 	public static String longestSubsequence(Set<String> uniqueSubSeq1, Set<String> uniqueSubSeq2) {
 		for(String s1 : uniqueSubSeq1) {
-			for(String s2 : uniqueSubSeq2) {
-				if(s1.equals(s2)) {
-					System.out.println(s1);
-					return s1;
-				}
+			if(uniqueSubSeq2.contains(s1)) {
+				System.out.println(s1);
+				return s1;
 			}
+//			for(String s2 : uniqueSubSeq2) {
+//				if(s1.equals(s2)) {
+//					System.out.println(s1);
+//					return s1;
+//				}
+//			}
 		}
 		return "none";
 	}
