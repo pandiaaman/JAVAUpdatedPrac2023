@@ -72,7 +72,7 @@ public class B_42_MergeSort {
 	}
 	
 	public static void main(String[] args) {
-		int arr[] = {6,3,9,5,2,8};
+		int arr[] = {4,7,1,3,0,9,8,5,2,6};
 		
 		int n = arr.length;
 		divide(arr, 0, n-1);
