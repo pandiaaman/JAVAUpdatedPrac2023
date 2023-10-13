@@ -42,7 +42,7 @@ public class A1_IntroToDSA {
 	
 	//ORDER OF GROWTH
 	 /*
-	  * c < log log n < log n < n^1/3 < n^1/2 < n < n < n^2 < n^3 < n^4 < 2^n < n^n
+	  * c < log log n < log n < n^1/3 < n^1/2 < n < n^2 < n^3 < n^4 < 2^n < n^n
 	  */
 	
 	public static void main(String[] args) {
