@@ -43,7 +43,16 @@ public class A1_IntroToDSA {
 	//ORDER OF GROWTH
 	 /*
 	  * c < log log n < log n < n^1/3 < n^1/2 < n < n^2 < n^3 < n^4 < 2^n < n^n
+	  * 
+	  * order of growth is the amount of time the algorithm will grow by if the input size increases
 	  */
+	
+	//AYMPTOTIC NOTATIONS
+	/*
+	 * Big O : exact or upper bound : worst case
+	 * Theta : exact : to be used when we know the exact bound on the function
+	 * Omega : exact or lower bound : atleast this much time
+	 */
 	
 	public static void main(String[] args) {
 		
@@ -72,5 +81,21 @@ public class A1_IntroToDSA {
 	
 	public static int sumOfNImproved(int n) {
 		return n*(n+1)/2; //O(1)
+	}
+	
+	public static boolean isPrime(int n) {
+		if(n == 1) //1
+			return false;
+		if(n == 2 || n == 3) //1
+			return true;
+		if(n%2 == 0 || n%3 == 0) //1
+			return false;
+		
+		for(int i = 5; i*i < n; i=i+6) { //square root of n
+			if(n%i == 0 || n%i+2 == 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
