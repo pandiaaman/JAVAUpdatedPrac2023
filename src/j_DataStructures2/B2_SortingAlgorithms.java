@@ -11,6 +11,10 @@ public class B2_SortingAlgorithms {
 //		Arrays.fill(arr1, 5);
 		bubbleSort(arr1);
 		System.out.println(Arrays.toString(arr1));
+		
+		int[] arr2 = new int[] {3,7,1,9,2,5,11,4,8,0};
+		selectionSort(arr2);
+		System.out.println(Arrays.toString(arr2));
 	}
 	
 	public static void bubbleSort(int[] arr) {
@@ -23,4 +27,18 @@ public class B2_SortingAlgorithms {
 			}
 		}
 	}
+	
+	public static void selectionSort(int[] arr) {
+		//don't compare everything with everything, we store the value and if the value is higher we swap
+		for(int sortedPartition = arr.length-1; sortedPartition>=0 ; sortedPartition--) {
+			int maxIndex = 0;
+			for(int i = 0; i <= sortedPartition; i++) {
+				if(arr[i] > arr[maxIndex]) {
+					maxIndex = i;
+				}
+			}
+			arr[maxIndex] = arr[sortedPartition] + arr[maxIndex] - (arr[sortedPartition] = arr[maxIndex]);
+		}
+	}
+	
 }
