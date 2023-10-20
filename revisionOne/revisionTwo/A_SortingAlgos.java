@@ -8,7 +8,7 @@ public class A_SortingAlgos {
 	public static void main(String[] args) {
 		
 		int[] arr = new int[] {5,6,3,2,7,9,1,4,8,0};
-		
+		//bubble sort
 		bubbleSort(arr);
 		
 		for(int i:arr) {
